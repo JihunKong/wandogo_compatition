@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 완도고 백일장 작품 제출</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif KR', serif;
+            background: linear-gradient(135deg, #f5deb3 0%, #d2691e 50%, #8b4513 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 낙엽 애니메이션 */
+        .leaf {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(205, 92, 92, 0.7);
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            animation: fall 15s linear infinite;
+            opacity: 0.6;
+        }
+
+        .leaf:nth-child(1) { left: 10%; animation-delay: 0s; background: rgba(184, 134, 11, 0.7); }
+        .leaf:nth-child(2) { left: 30%; animation-delay: 3s; background: rgba(205, 92, 92, 0.7); }
+        .leaf:nth-child(3) { left: 50%; animation-delay: 6s; background: rgba(210, 105, 30, 0.7); }
+        .leaf:nth-child(4) { left: 70%; animation-delay: 9s; background: rgba(139, 69, 19, 0.7); }
+        .leaf:nth-child(5) { left: 90%; animation-delay: 12s; background: rgba(188, 143, 143, 0.7); }
+
+        @keyframes fall {
+            0% {
+                top: -50px;
+                transform: rotate(0deg);
+            }
+            100% {
+                top: 100vh;
+                transform: rotate(360deg);
+            }
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #d2691e;
+            padding-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #8b4513;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            color: #d2691e;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            font-size: 1.1em;
+            color: #5d4037;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        label .required {
+            color: #cd5c5c;
+            margin-left: 5px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 15px;
+            font-size: 1em;
+            border: 2px solid #d2b48c;
+            border-radius: 10px;
+            background: #fff8dc;
+            transition: all 0.3s;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #d2691e;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(210, 105, 30, 0.2);
+        }
+
+        .help-text {
+            font-size: 0.9em;
+            color: #8b7355;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #d2691e;
+            padding: 15px;
+            margin-top: 8px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            color: #856404;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #d2691e 0%, #8b4513 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            font-family: 'Noto Sans KR', sans-serif;
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            border: 2px solid #c3e6cb;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            border: 2px solid #f5c6cb;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap');
+    </style>
+</head>
+<body>
+    <!-- 낙엽 애니메이션 -->
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🍂 2025 완도고 백일장 🍂</h1>
+            <p>작품 제출</p>
+        </div>
+
+        <form id="submissionForm">
+            <div class="form-group">
+                <label for="studentId">학번 <span class="required">*</span></label>
+                <input type="text" id="studentId" name="studentId" required placeholder="예: 2-3-15">
+                <div class="help-text">학년-반-번호 형식으로 입력해주세요</div>
+            </div>
+
+            <div class="form-group">
+                <label for="studentName">이름 <span class="required">*</span></label>
+                <input type="text" id="studentName" name="studentName" required placeholder="홍길동">
+            </div>
+
+            <div class="form-group">
+                <label for="workTitle">작품 제목 <span class="required">*</span></label>
+                <input type="text" id="workTitle" name="workTitle" required placeholder="작품의 제목을 입력하세요">
+            </div>
+
+            <div class="form-group">
+                <label for="category">참가 부문 <span class="required">*</span></label>
+                <select id="category" name="category" required>
+                    <option value="">선택해주세요</option>
+                    <option value="운문">운문 (시)</option>
+                    <option value="산문">산문 (소설, 수필 등)</option>
+                    <option value="영상">영상</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="driveLink">작품 제출 (구글 드라이브 링크) <span class="required">*</span></label>
+                <input type="text" id="driveLink" name="driveLink" required placeholder="https://docs.google.com/... 또는 https://drive.google.com/...">
+                <div class="warning">
+                    ⚠️ <strong>중요:</strong> 링크 공유 권한을 <strong>'보기 권한 이상'</strong>으로 반드시 설정해주세요. 권한이 없으면 작품을 확인할 수 없습니다!
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">제출하기</button>
+
+            <div class="success-message" id="successMessage">
+                ✅ 작품이 성공적으로 제출되었습니다!
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                ❌ 제출 중 오류가 발생했습니다. 다시 시도해주세요.
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('submissionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // 폼 데이터 수집
+            const formData = {
+                studentId: document.getElementById('studentId').value,
+                studentName: document.getElementById('studentName').value,
+                workTitle: document.getElementById('workTitle').value,
+                category: document.getElementById('category').value,
+                driveLink: document.getElementById('driveLink').value,
+                timestamp: new Date().toISOString()
+            };
+
+            // 구글 드라이브 링크 유효성 검사
+            const driveLink = formData.driveLink;
+            if (!driveLink.includes('drive.google.com') && !driveLink.includes('docs.google.com')) {
+                alert('올바른 구글 드라이브 또는 문서 링크를 입력해주세요.');
+                return;
+            }
+
+            // Google Apps Script Web App URL
+            const scriptURL = 'https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLiuoKahOzhZH0tPBg_FCgc0R7VwTwCueWiKH3qjUT6rS41ZqBTCBdTtJDxm5OCUeRutPIfJ0tAy4NJXzeA1HJOqwXIJkxIqiNoPCqH1adv7Q0oqdosN0y8HaF-jVPLBJETxByRFrjHQ2Xo7iPlv9F9P-TWQHWjvuRxn32EHf2eQQ8gXHYwmVRUiWsjXcZohNTvT6ONSY9nsemayHVXY-yr-2CHriREZHWiTZVEh_DcGBjQyrTbNt0Gn1rT82QoLxMXzf7CWVHEuHOpERkD0K2kUhRMUJbZUpirxReyZ&lib=MtveYfoZ0TpnAYVOuE5NZU_cL9f0stKn-';
+            
+            try {
+                // 실제 제출
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                // 개발/테스트용 (실제 제출은 되지 않음)
+                // console.log('제출 데이터:', formData);
+                
+                // 성공 메시지 표시
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+                
+                // 폼 초기화
+                this.reset();
+                
+                // 3초 후 메시지 숨기기
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 3000);
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
